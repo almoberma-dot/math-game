@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<title>משחק חשבון</title>
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        background: #f2f2f2;
+        direction: rtl;
+    }
+    .box {
+        margin-top: 80px;
+        background: white;
+        padding: 20px;
+        display: inline-block;
+        border-radius: 10px;
+        box-shadow: 0 0 10px gray;
+    }
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    input {
+        padding: 10px;
+        font-size: 16px;
+        width: 100px;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h1>משחק חשבון</h1>
+    <h2 id="question">לחץ התחל</h2>
+    <input type="number" id="answer" placeholder="תשובה">
+    <br>
+    <button onclick="checkAnswer()">בדוק</button>
+    <button onclick="newQuestion()">שאלה חדשה</button>
+    <button onclick="startGame()">התחל משחק</button>
+    <h3 id="score">ניקוד: 0</h3>
+    <h3 id="result"></h3>
+</div>
+
+<script>
+let num1, num2, correctAnswer;
+let score = 0;
+
+function startGame() {
+    score = 0;
+    document.getElementById("score").innerText = "ניקוד: " + score;
+    newQuestion();
+    document.getElementById("result").innerText = "";
+}
+
+function newQuestion() {
+    num1 = Math.floor(Math.random() * 20) + 1;
+    num2 = Math.floor(Math.random() * 20) + 1;
+    
+    const ops = ["+", "-", "*"];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+
+    if (op === "+") correctAnswer = num1 + num2;
+    if (op === "-") correctAnswer = num1 - num2;
+    if (op === "*") correctAnswer = num1 * num2;
+
+    document.getElementById("question").innerText =
+        `${num1} ${op} ${num2} = ?`;
+
+    document.getElementById("answer").value = "";
+}
+
+function checkAnswer() {
+    let userAnswer = Number(document.getElementById("answer").value);
+
+    if (userAnswer === correctAnswer) {
+        score++;
+        document.getElementById("result").innerText = "נכון!";
+    } else {
+        document.getElementById("result").innerText = "לא נכון, התשובה היא " + correctAnswer;
+    }
+
+    document.getElementById("score").innerText = "ניקוד: " + score;
+}
+</script>
+
+</body>
+</html>
